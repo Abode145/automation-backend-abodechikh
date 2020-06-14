@@ -1,7 +1,9 @@
 /// <reference types="cypress" />
 
+const faker = require('faker')
 import * as ClientHelper from '../helpers/clientHelper'
 import * as LogOut from '../helpers/logOut'
+import * as BillsHelper from '../helpers/bills'
 
 //validToken
 describe('testing backend', function(){
@@ -28,6 +30,16 @@ describe('testing backend', function(){
         }))
 
     })
+
+    it.only('Create new client', function(){
+        cy.validToken().then(( response => {
+
+            BillsHelper.CreateBillRequest(cy)
+            
+        }))
+
+    })
+    
 
 
 })//CreateClientRequestAndEdit

@@ -1,16 +1,40 @@
 const faker = require('faker')
-const Endpoint_PostClient = 'http://localhost:3000/api/client/new'
-const Endpoint_GetClients = 'http://localhost:3000/api/clients'
-const Endpoint_GetClient = 'http://localhost:3000/api/client/'
+const Endpoint_PostBill = 'http://localhost:3000/api/bill/new'
+const Endpoint_GetBills = 'http://localhost:3000/api/bills'
+const Endpoint_GetBill = 'http://localhost:3000/api/bill/'
 
 
-    const name = faker.name.firstName()
-    const email = faker.internet.email()
-    const phone = faker.phone.phoneNumber()
+    const Price = faker.random.number()
 
     const payload = {
-    "name": name,
-    "email": email,
-    "telephone":phone
+        "value":Price
+        ,"paid": false
+        }
+
+        
+    
+    function CreateBillRequest(cy){
+    
+        cy.request({
+            method:"POST",
+            url: Endpoint_PostBill,
+            headers: {
+                'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
+                'Content-Type': 'application/json'
+            },
+            body:payload
+    
+        }).then((response => {
+            expect(response.status).to.eq(200) //only verify if status = OK
+            
+           
+        }))
+        
     }
+    
   
+
+    module.exports = {
+        CreateBillRequest
+    
+    }
